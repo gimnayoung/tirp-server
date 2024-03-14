@@ -17,8 +17,21 @@ userController.createUser=async(req,res)=>{
         return res.status(200).json({status:"성공"});
     }
     catch(error){
-        res.status(400).json({status:"fail",error:error.message})
+        return res.status(400).json({status:"fail",error:error.message})
     }
 }
 
+userController.getUser=async(req,res)=>{
+    try{
+        let {userId} =req;
+        const user = await User.findById(userId)
+        if(user){
+            return res.status(200).json({status:"성공",user});
+        }
+        throw new Error ("토근이 일치하지 않습니다.")
+    }
+    catch(error){
+        return res.status(400).json({status:"fail",error:error.message})
+    }
+}
 module.exports=userController;
